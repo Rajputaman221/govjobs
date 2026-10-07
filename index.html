@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Latest Government Jobs in India – Daily Updated | TechnoJobs</title>
+<meta name="description" content="Latest Indian government job notifications updated daily: SSC, UPSC, Railway, Banking, Defence, Police, Teaching and State jobs with official apply links.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <h1>🇮🇳 Government Jobs <span>India</span></h1>
+    <p class="sub">Updated every day automatically · Apply on the official website</p>
+    <div class="stats" id="stats"></div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="filters">
+    <input id="q" type="search" placeholder="Search job, department, state… (e.g. railway, SSC, bihar)" aria-label="Search jobs">
+    <select id="cat" aria-label="Category"><option value="">All categories</option></select>
+    <select id="state" aria-label="State"><option value="">All states</option></select>
+    <select id="sort" aria-label="Sort">
+      <option value="new">Newest first</option>
+      <option value="vac">Most vacancies</option>
+    </select>
+  </section>
+
+  <div class="chips" id="chips"></div>
+  <p class="count" id="count"></p>
+  <section id="list" class="list" aria-live="polite"></section>
+  <button id="more" class="more" hidden>Load more jobs</button>
+
+  <p class="note">
+    ⚠️ Always confirm details on the official notification before applying. Never pay anyone to apply for a government job.
+    Job listings are collected from public sources; this site is not affiliated with any government body.
+  </p>
+</main>
+
+<footer class="foot"><div class="wrap">TechnoJobs · Last updated: <b id="updated">–</b></div></footer>
+<script src="app.js"></script>
+</body>
+</html>

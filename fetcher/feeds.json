@@ -1,0 +1,17 @@
+{
+  "_note": "Add or remove RSS feed URLs here. Each is read once a day. Check each feed still works in your browser before adding.",
+  "feeds": [
+    { "name": "Govt Jobs Diary", "url": "https://govtjobsdiary.com/feed" },
+    { "name": "Govt Jobs Blog", "url": "https://govtjobsblog.in/feed" }
+  ],
+  "official_domains": [
+    "gov.in", "nic.in", "upsc.gov.in", "ssc.gov.in", "ssc.nic.in",
+    "indianrailways.gov.in", "rrbcdg.gov.in", "ibps.in", "sbi.co.in",
+    "joinindianarmy.nic.in", "joinindiannavy.gov.in", "indianairforce.nic.in",
+    "ntaonline.in", "nta.ac.in", "drdo.gov.in", "isro.gov.in", "iocl.com",
+    "ongcindia.com", "ntpc.co.in", "sail.co.in", "bhel.com", "coalindia.in",
+    "rbi.org.in", "nabard.org", "epfindia.gov.in", "india.gov.in", "ac.in"
+  ],
+  "max_jobs_kept": 600,
+  "max_age_days": 60
+}
