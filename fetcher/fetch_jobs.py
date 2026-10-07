@@ -111,24 +111,44 @@ def is_official(url, domains):
     return any(host == d or host.endswith("." + d) for d in domains)
 
 
+BLOCKED_HOSTS = (
+    "t.me", "telegram", "whatsapp", "facebook", "twitter", "x.com", "youtube", "youtu.be",
+    "instagram", "play.google", "apps.apple", "google.", "bit.ly", "linkedin", "pinterest",
+    "freejobalert", "sarkariresult", "govtjobsblog", "govtjobsdiary", "wp.me", "gravatar",
+    "wordpress", "amazon.", "flipkart", "shopify",
+)
+GUESS_LABEL = r"apply online|apply now|apply offline|official (?:website|site|notification)|notification|advertisement|advt"
+
+
 def find_links(page_html, post_url, domains):
-    """Return (apply_link, notification_pdf, official_site) from a post page."""
-    apply_link = notice_pdf = official_site = None
+    """Return (apply, notice_pdf, official_site, guess_apply, guess_pdf) from a post page.
+    First three are on official (government) domains. The last two are label-based guesses
+    on other domains (private/PSU employers) and are shown with a 'verify' warning."""
+    apply_link = notice_pdf = official_site = guess_apply = guess_pdf = None
     post_host = (urlparse(post_url).hostname or "").lower()
     for m in re.finditer(r'(?is)<a\s[^>]*href=["\']([^"\']+)["\'][^>]*>(.*?)</a>', page_html):
         href, label = m.group(1).strip(), strip_tags(m.group(2)).lower()
         if not href.startswith("http"):
             continue
         host = (urlparse(href).hostname or "").lower()
-        if host == post_host or not is_official(href, domains):
+        if host == post_host:
             continue
-        if not official_site:
-            official_site = href
-        if href.lower().split("?")[0].endswith(".pdf") and not notice_pdf:
-            notice_pdf = href
-        if not apply_link and re.search(r"apply|registration|online form|login", label + href.lower()):
-            apply_link = href
-    return apply_link, notice_pdf, official_site
+        is_pdf = href.lower().split("?")[0].endswith(".pdf")
+        if is_official(href, domains):
+            if is_pdf:
+                notice_pdf = notice_pdf or href
+            else:
+                official_site = official_site or href
+                if not apply_link and re.search(r"apply|registration|online form|login", label + href.lower()):
+                    apply_link = href
+        elif not any(b in host for b in BLOCKED_HOSTS) and re.search(GUESS_LABEL, label):
+            if is_pdf:
+                guess_pdf = guess_pdf or href
+            elif re.search(r"apply", label):
+                guess_apply = guess_apply or href
+            else:
+                guess_apply = guess_apply or href
+    return apply_link, notice_pdf, official_site, guess_apply, guess_pdf
 
 
 def classify(text):
@@ -188,6 +208,8 @@ def main():
     old = {j["id"]: j for j in load_old()}
     now = datetime.now(timezone.utc)
     new_count = 0
+    skip_words = [w.lower() for w in cfg.get("skip_title_words", [])]
+    skipped = 0
 
     for feed in cfg["feeds"]:
         print(f"Feed: {feed['name']}")
@@ -196,23 +218,30 @@ def main():
         except Exception as e:
             print(f"  ! failed: {e}")
             continue
-        print(f"  {len(items)} items")
+        newest = max((i["date"] for i in items), default=None)
+        print(f"  {len(items)} items, newest post: {newest.strftime('%Y-%m-%d') if newest else 'none'}")
         for it in items:
             jid = job_id(it["link"])
             if jid in old:
                 continue
+            if any(w in it["title"].lower() for w in skip_words):
+                skipped += 1
+                continue
             summary_src = strip_tags(it["desc_html"])
-            apply_link = notice_pdf = official_site = None
+            apply_link = notice_pdf = official_site = guess_apply = guess_pdf = None
             page_text = ""
             try:
                 page = http_get(it["link"])
-                apply_link, notice_pdf, official_site = find_links(page, it["link"], domains)
+                apply_link, notice_pdf, official_site, guess_apply, guess_pdf = find_links(page, it["link"], domains)
                 page_text = strip_tags(page)[:6000]
                 time.sleep(1)  # be polite to the source site
             except Exception as e:
                 print(f"  ! post page failed ({it['link']}): {e}")
             blob = f"{it['title']} {summary_src} {page_text}"
             best = apply_link or official_site
+            is_off = bool(best)
+            best = best or guess_apply or ""
+            notice_pdf = notice_pdf or guess_pdf
             old[jid] = {
                 "id": jid,
                 "title": it["title"],
@@ -223,9 +252,9 @@ def main():
                 "last_date": find_last_date(blob),
                 "summary": summary_src[:220].rstrip() + ("…" if len(summary_src) > 220 else ""),
                 "posted": it["date"].astimezone(timezone.utc).strftime("%Y-%m-%d"),
-                "apply_url": best or "",
+                "apply_url": best,
                 "notification_url": notice_pdf or "",
-                "official": bool(best),
+                "official": is_off,
                 "source_name": it["source"],
                 "source_url": it["link"],
                 "added": now.strftime("%Y-%m-%d"),
@@ -233,7 +262,9 @@ def main():
             new_count += 1
 
     cutoff = (now - timedelta(days=cfg["max_age_days"])).strftime("%Y-%m-%d")
-    jobs = [j for j in old.values() if j["posted"] >= cutoff]
+    all_jobs = list(old.values())
+    jobs = [j for j in all_jobs if j["posted"] >= cutoff]
+    print(f"Skipped {skipped} non-job posts (results/admit cards); dropped {len(all_jobs) - len(jobs)} older than {cfg['max_age_days']} days")
     jobs.sort(key=lambda j: (j["posted"], j["added"]), reverse=True)
     jobs = jobs[: cfg["max_jobs_kept"]]
 

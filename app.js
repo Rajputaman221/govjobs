@@ -44,7 +44,7 @@
     h += '<div class="meta"><span class="tag">' + esc(j.category) + "</span>";
     if (age <= 2) h += '<span class="tag new">NEW</span>';
     h += "<span>📍 " + esc(j.state) + "</span><span>🗓 Posted " + esc(j.posted) + "</span>";
-    h += j.official ? '<span class="off">✔ Official link</span>' : '<span class="unv">Official link not found – check source</span>';
+    h += j.official ? '<span class="off">✔ Official link</span>' : (apply ? '<span class="unv">Link from source – verify before applying</span>' : '<span class="unv">Official link not found – check source</span>');
     h += "</div>";
     if (j.summary) h += '<p class="sum">' + esc(j.summary) + "</p>";
     h += '<div class="facts">';

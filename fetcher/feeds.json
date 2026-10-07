@@ -1,17 +1,62 @@
 {
   "_note": "Add or remove RSS feed URLs here. Each is read once a day. Check each feed still works in your browser before adding.",
   "feeds": [
-    { "name": "Govt Jobs Diary", "url": "https://govtjobsdiary.com/feed" },
-    { "name": "Govt Jobs Blog", "url": "https://govtjobsblog.in/feed" }
+    {
+      "name": "FreeJobAlert",
+      "url": "https://www.freejobalert.com/feed/"
+    },
+    {
+      "name": "Govt Jobs Blog",
+      "url": "https://govtjobsblog.in/feed"
+    }
   ],
   "official_domains": [
-    "gov.in", "nic.in", "upsc.gov.in", "ssc.gov.in", "ssc.nic.in",
-    "indianrailways.gov.in", "rrbcdg.gov.in", "ibps.in", "sbi.co.in",
-    "joinindianarmy.nic.in", "joinindiannavy.gov.in", "indianairforce.nic.in",
-    "ntaonline.in", "nta.ac.in", "drdo.gov.in", "isro.gov.in", "iocl.com",
-    "ongcindia.com", "ntpc.co.in", "sail.co.in", "bhel.com", "coalindia.in",
-    "rbi.org.in", "nabard.org", "epfindia.gov.in", "india.gov.in", "ac.in"
+    "gov.in",
+    "nic.in",
+    "upsc.gov.in",
+    "ssc.gov.in",
+    "ssc.nic.in",
+    "indianrailways.gov.in",
+    "rrbcdg.gov.in",
+    "ibps.in",
+    "sbi.co.in",
+    "joinindianarmy.nic.in",
+    "joinindiannavy.gov.in",
+    "indianairforce.nic.in",
+    "ntaonline.in",
+    "nta.ac.in",
+    "drdo.gov.in",
+    "isro.gov.in",
+    "iocl.com",
+    "ongcindia.com",
+    "ntpc.co.in",
+    "sail.co.in",
+    "bhel.com",
+    "coalindia.in",
+    "rbi.org.in",
+    "nabard.org",
+    "epfindia.gov.in",
+    "india.gov.in",
+    "ac.in",
+    "res.in",
+    "edu.in"
   ],
   "max_jobs_kept": 600,
-  "max_age_days": 60
+  "max_age_days": 60,
+  "skip_title_words": [
+    "result",
+    "admit card",
+    "answer key",
+    "syllabus",
+    "cut off",
+    "cutoff",
+    "merit list",
+    "hall ticket",
+    "scorecard",
+    "score card",
+    "exam date",
+    "time table",
+    "timetable",
+    "counselling"
+  ]
 }
