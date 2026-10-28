@@ -1,5 +1,57 @@
 {
- "generated_at": "2026-10-28 07:12 UTC",
- "count": 0,
- "jobs": []
+ "generated_at": "2026-10-28 14:20 UTC",
+ "count": 3,
+ "jobs": [
+  {
+   "id": "https-www-govtjobsblog-in-slsmpc-recruitment",
+   "title": "SLSMPC Recruitment 2026",
+   "organisation": "SLSMPC",
+   "category": "Other",
+   "state": "All India",
+   "vacancies": "03",
+   "last_date": "10/07/2024",
+   "summary": "SLSMPC Recruitment : Sri Lakshmi Srinivasa Manpower Corporation, latest job announcement on . It releases many SLSMPC career and ap outsourcing jobs notifications that can be applied through the official […] The post SLS…",
+   "posted": "2026-10-28",
+   "apply_url": "",
+   "notification_url": "",
+   "official": false,
+   "source_name": "Govt Jobs Blog",
+   "source_url": "https://www.govtjobsblog.in/slsmpc-recruitment/",
+   "added": "2026-10-28"
+  },
+  {
+   "id": "https-www-govtjobsblog-in-ttd-recruitment",
+   "title": "TTD Recruitment 2026",
+   "organisation": "TTD",
+   "category": "Other",
+   "state": "All India",
+   "vacancies": "2026",
+   "last_date": "16/03/2026",
+   "summary": "Tirumala Tirupati Devasthanams, the latest job announcement is on . It releases many TTD govt Jobs notifications that can be applied through the official website, www.tirumala.org. The TTD recruits posts […] The post TTD…",
+   "posted": "2026-10-27",
+   "apply_url": "",
+   "notification_url": "",
+   "official": false,
+   "source_name": "Govt Jobs Blog",
+   "source_url": "https://www.govtjobsblog.in/ttd-recruitment/",
+   "added": "2026-10-28"
+  },
+  {
+   "id": "https-www-govtjobsblog-in-apcos-ap-outsourcing-recruitment",
+   "title": "AP Outsourcing Jobs Recruitment 2026",
+   "organisation": "AP Outsourcing Jobs",
+   "category": "Other",
+   "state": "Andhra Pradesh",
+   "vacancies": "515801",
+   "last_date": "10/04/2026",
+   "summary": "Andhra Pradesh Corporation for Outsourced Services has announced the latest AP Govt Jobs on . It releases many Andhra Pradesh Corporation for Outsourced Services career notifications that can be applied for through […] T…",
+   "posted": "2026-10-27",
+   "apply_url": "",
+   "notification_url": "",
+   "official": false,
+   "source_name": "Govt Jobs Blog",
+   "source_url": "https://www.govtjobsblog.in/apcos-ap-outsourcing-recruitment/",
+   "added": "2026-10-28"
+  }
+ ]
 }
